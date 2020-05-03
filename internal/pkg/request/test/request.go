@@ -2,11 +2,11 @@ package request
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"strings"
 
 	"github.com/dema501/randomjoke/internal/pkg/request"
-	"github.com/pkg/errors"
 )
 
 // FakeSuperAgent has been build for unit tests purpose
@@ -24,7 +24,7 @@ func New(b *strings.Reader) request.Maker {
 // Implement interface
 func (r *FakeSuperAgent) Get(url string, result interface{}, args ...interface{}) error {
 	if err := json.NewDecoder(r.body).Decode(result); err != nil {
-		return errors.Wrap(err, "Can't Unmarshal response")
+		return fmt.Errorf("Can't Unmarshal response with error: %w", err)
 	}
 
 	return nil

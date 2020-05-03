@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"github.com/pkg/errors"
 )
 
 // SuperAgent it's wrapper around stdlib
@@ -31,7 +29,7 @@ func New() Maker {
 func (r *SuperAgent) Get(url string, result interface{}, args ...interface{}) error {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return errors.Wrap(err, "Can't make random name SuperAgent")
+		return fmt.Errorf("Can't make random name SuperAgent: %w", err)
 	}
 
 	for _, arg := range args {
@@ -49,7 +47,7 @@ func (r *SuperAgent) Get(url string, result interface{}, args ...interface{}) er
 
 	resp, err := r.Client.Do(req)
 	if err != nil {
-		return errors.Wrap(err, "Can't make SuperAgent")
+		return fmt.Errorf("Can't make actual request %w", err)
 	}
 
 	// yes sometimes resp.Body.Close() can have an error
@@ -62,7 +60,7 @@ func (r *SuperAgent) Get(url string, result interface{}, args ...interface{}) er
 	}()
 
 	if resp.StatusCode != http.StatusOK {
-		return errors.Wrap(err, "Response status is not OK response")
+		return fmt.Errorf("Response status is not OK response with error: %w", err)
 	}
 
 	// nothing to Unmarshal into
@@ -71,7 +69,7 @@ func (r *SuperAgent) Get(url string, result interface{}, args ...interface{}) er
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(result); err != nil {
-		return errors.Wrap(err, "Can't Unmarshal response")
+		return fmt.Errorf("Can't Unmarshal response with error: %w", err)
 	}
 
 	return nil

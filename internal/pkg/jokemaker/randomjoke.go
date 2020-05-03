@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/dema501/randomjoke/internal/pkg/request"
-	"github.com/pkg/errors"
 )
 
 type randomJoke struct {
@@ -46,7 +45,7 @@ func (rj *randomJoke) Generate() error {
 	}
 
 	if rj.response.Type != "success" || rj.response.Value.Joke == "" {
-		return errors.New("Results in random joke response is empty")
+		return fmt.Errorf("Results in random joke response equal zero: %v", rj.response)
 	}
 
 	return nil

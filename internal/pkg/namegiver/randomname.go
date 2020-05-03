@@ -1,8 +1,9 @@
 package namegiver
 
 import (
+	"fmt"
+
 	"github.com/dema501/randomjoke/internal/pkg/request"
-	"github.com/pkg/errors"
 )
 
 type randomName struct {
@@ -35,7 +36,7 @@ func (rn *randomName) Generate() error {
 	}
 
 	if len(rn.response.Results) == 0 {
-		return errors.New("Results in random name response equal zero")
+		return fmt.Errorf("Results in random name response equal zero: %v", rn.response)
 	}
 
 	return nil
