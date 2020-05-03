@@ -7,8 +7,17 @@ A dead simple api for generating jokes.
 
 just simply run from terminal under project root
 ```
+make run-rest-api
+```
+it will start web-server on port 5000
+
+
+or you can run cli
+
+```
 make run
 ```
+
 
 ## HOW TO TEST
 

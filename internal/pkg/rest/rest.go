@@ -28,7 +28,7 @@ func (s *Server) Run(options ...func(*gin.RouterGroup)) {
 
 	router.Use(gin.Recovery())
 
-	// TODO: use better way to log rquests
+	// TODO: use better way to log requests
 	// TODO: make it optional
 	router.Use(s.loggerMiddleware())
 
@@ -76,7 +76,7 @@ func (s *Server) loggerMiddleware() gin.HandlerFunc {
 		t := time.Now()
 		c.Next()
 
-		// TODO: use better way to log rquests
+		// TODO: use better way to log requests
 		log.Printf("[INFO] %s %s %s %v %d",
 			c.Request.Method, c.Request.URL.Path,
 			c.ClientIP(), time.Since(t), c.Writer.Status())
