@@ -18,7 +18,7 @@ type randomName struct {
 	}
 }
 
-func New(sa request.Maker) *randomName {
+func New(sa request.Maker) Doer {
 	r := randomName{}
 	r.SuperAgent = sa
 	r.url = "https://randomuser.me/api/"

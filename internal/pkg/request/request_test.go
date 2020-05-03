@@ -7,10 +7,11 @@ import (
 )
 
 // testing for Get method
-func TestGet(t *testing.T) {
+func TestRequestGet(t *testing.T) {
 	caseEmpty := "/"
 	caseSetHeader := "/set_header"
 
+	// run fake http sever to accept requests
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// check method is GET before going to check other features
 		if r.Method != http.MethodGet {
@@ -38,10 +39,10 @@ func TestGet(t *testing.T) {
 		t.Errorf("Expected NoError %v", err)
 	}
 
-	h := make(Header)
-	h["Header1"] = "foo-key"
+	hdr := make(Header)
+	hdr["Header1"] = "foo-key"
 
-	if err := New().Get(ts.URL+caseSetHeader, nil, h); err != nil {
+	if err := New().Get(ts.URL+caseSetHeader, nil, hdr); err != nil {
 		t.Errorf("Expected NoError %v", err)
 	}
 }

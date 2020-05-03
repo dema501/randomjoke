@@ -22,7 +22,7 @@ type Header map[string]string
 type Auth []string
 
 // Constructor..
-func New() *SuperAgent {
+func New() Maker {
 	return &SuperAgent{
 		Client: &http.Client{Timeout: time.Millisecond * 1200},
 	}
@@ -54,6 +54,7 @@ func (r *SuperAgent) Get(url string, result interface{}, args ...interface{}) er
 
 	// yes sometimes resp.Body.Close() can have an error
 	// it's better to log it, now it's just into stdout
+	// TODO: pass logger into struct
 	defer func() {
 		if err := resp.Body.Close(); err != nil {
 			fmt.Printf("[WARN] can't close response body, %s", err)

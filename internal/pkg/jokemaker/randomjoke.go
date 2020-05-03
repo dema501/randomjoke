@@ -20,7 +20,7 @@ type randomJoke struct {
 	}
 }
 
-func New(sa request.Maker) *randomJoke {
+func New(sa request.Maker) Doer {
 	r := &randomJoke{}
 	r.SuperAgent = sa
 	r.url = "http://api.icndb.com/jokes/random?limitTo=[nerdy]"

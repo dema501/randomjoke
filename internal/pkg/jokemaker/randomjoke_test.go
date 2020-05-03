@@ -4,15 +4,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dema501/randomjoke/internal/pkg/request"
+	request "github.com/dema501/randomjoke/internal/pkg/request/test"
 )
 
 func TestRandomJokeGenerator(t *testing.T) {
 	payload := `{ "type": "success", "value": { "id": 534, "joke": "John Doe is the ultimate mutex, all threads fear him.", "categories": ["nerdy"] } }`
 
-	sa := &request.FakeSuperAgent{
-		Body: strings.NewReader(payload),
-	}
+	sa := request.New(strings.NewReader(payload))
 
 	rj := New(sa)
 

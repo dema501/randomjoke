@@ -21,12 +21,15 @@ type Server struct {
 
 //Run the lister and request's router, activate rest server
 func (s *Server) Run(options ...func(*gin.RouterGroup)) {
-	// TODO: better to allow to set logger type
+	// TODO: use better way to log status
 	log.Printf("[INFO] activate rest server")
 
 	router := gin.New()
 
 	router.Use(gin.Recovery())
+
+	// TODO: use better way to log rquests
+	// TODO: make it optional
 	router.Use(s.loggerMiddleware())
 
 	router.GET("/ping", s.pingCtrl)
@@ -61,13 +64,6 @@ func (s *Server) Run(options ...func(*gin.RouterGroup)) {
 	log.Fatal(router.Run(":" + s.ServerPort))
 }
 
-// DocsPageHandler handle url /
-func (s *Server) getDocsCtrl(c *gin.Context) {
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"title": "Promo events Api Docs",
-	})
-}
-
 // PingHandler handle url /v1/ping
 func (s *Server) pingCtrl(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
@@ -80,6 +76,7 @@ func (s *Server) loggerMiddleware() gin.HandlerFunc {
 		t := time.Now()
 		c.Next()
 
+		// TODO: use better way to log rquests
 		log.Printf("[INFO] %s %s %s %v %d",
 			c.Request.Method, c.Request.URL.Path,
 			c.ClientIP(), time.Since(t), c.Writer.Status())
