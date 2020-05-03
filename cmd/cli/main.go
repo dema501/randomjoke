@@ -12,7 +12,7 @@ import (
 func main() {
 	sa := request.New()
 	if j, err := MakeJoke(namegiver.New(sa), jokemaker.New(sa)); err != nil {
-		fmt.Println(err)
+		fmt.Printf("[ERROR] %v", err)
 	} else {
 		fmt.Println(j)
 	}
